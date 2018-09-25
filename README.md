@@ -30,10 +30,13 @@ Inverse Reinforcement Learning이 가지는 단점은 실행시에 필요한 연
 
 따라서 Inverse Reinforcement Learning은 택시 운전자의 행동 예측에서부터 네발로 된 로봇의 발판을 계획하는 데 이르기까지 광범위한 문제에 성공했습니다.
 
-## [Methodology]
-(1) Data 로 부터 직접 inverse reinforcement learning을 통해서 reinforcement learning으로 학습한 것과 같은 정책 (policy)를 추출해내는 framework를 제안  
+## [Background]
+> Background는 기본적은 Reinforcement에서 적용되는 용어들을 사용하므로 다음과 같이 사진으로 대체합니다.  
+![image](https://user-images.githubusercontent.com/40893452/46005029-4f99db00-c0ef-11e8-8c08-0e0400a1bde0.png)
 
-(2) 
+![image](https://user-images.githubusercontent.com/40893452/46005291-e797c480-c0ef-11e8-812e-3840a726215e.png)
+
+
 
 ## [Related Work]
 
