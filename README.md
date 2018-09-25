@@ -34,7 +34,7 @@ Inverse Reinforcement Learning이 가지는 단점은 실행시에 필요한 연
 > Background는 기본적은 Reinforcement에서 적용되는 용어들을 사용하므로 다음과 같이 사진으로 대체합니다.  
 ![image](https://user-images.githubusercontent.com/40893452/46005029-4f99db00-c0ef-11e8-8c08-0e0400a1bde0.png)
 
-![image](https://user-images.githubusercontent.com/40893452/46005291-e797c480-c0ef-11e8-812e-3840a726215e.png)
+> ![image](https://user-images.githubusercontent.com/40893452/46005291-e797c480-c0ef-11e8-812e-3840a726215e.png)
 
 
 
