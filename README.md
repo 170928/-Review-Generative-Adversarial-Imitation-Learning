@@ -43,6 +43,22 @@ Inverse Reinforcement Learning이 가지는 단점은 실행시에 필요한 연
 
 ## [Related Work]
 
+기본적으로 PPO, TRPO 의 알고리즘이 사용되므로 살펴보시는 것을 추천합니다. 
+> 이원웅 님의 TRPO 에 대한 좋은 슬라이드 입니다.  
+> https://www.slideshare.net/WoongwonLee/trpo-87165690
+
+> PPO 논문입니다  
+> https://arxiv.org/pdf/1707.06347.pdf  
+> TRPO 논문입니다   
+> https://arxiv.org/abs/1502.05477  
+
+> 두 논문 모두 내용과 구현이 굉장히 어려운 논문이라... 천천히해보려고합니다.
 
 ## [Details]
+
+
+
+
+
+
 
