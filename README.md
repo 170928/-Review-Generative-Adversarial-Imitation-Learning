@@ -4,7 +4,8 @@
 > https://arxiv.org/pdf/1606.03476.pdf  
 
 > 참조 사이트   
-> http://bboyseiok.com/GAIL/
+> http://bboyseiok.com/GAIL   
+> https://medium.com/@sanketgujar95/generative-adversarial-imitation-learning-266f45634e60     
 
 ## [Motivation]
 전문가 (expert)와의 상호 작용이나 reward signal에 대한 정보 없이 (접근 없이) 전문가의 행동으로부터 정책 (policy) 을 학습하는 것을 고려하고자 하는 경우가 많습니다.    
@@ -46,7 +47,6 @@ Inverse Reinforcement Learning이 가지는 단점은 실행시에 필요한 연
 기본적으로 PPO, TRPO 의 알고리즘이 사용되므로 살펴보시는 것을 추천합니다. 
 > 이원웅 님의 TRPO 에 대한 좋은 슬라이드 입니다.  
 > https://www.slideshare.net/WoongwonLee/trpo-87165690   
-> https://medium.com/@sanketgujar95/generative-adversarial-imitation-learning-266f45634e60   
 > PPO 논문입니다  
 > https://arxiv.org/pdf/1707.06347.pdf  
 > TRPO 논문입니다   
@@ -56,6 +56,35 @@ Inverse Reinforcement Learning이 가지는 단점은 실행시에 필요한 연
 
 ## [Details]
 
+### Maximum Casual Entropy IRL 
+![image](https://user-images.githubusercontent.com/40893452/46121970-4fb1ec00-c251-11e8-8df3-fef96f282a2e.png)
+
+위의 식에서 maximum casual entropy는 const function을 "high entropy & minimum cumulative cost"를 가진 function에 근사시킵니다.   
+> Maximum Casual entropy IRL maps a cost function to high-entropy policies that minimize the expected cumulative cost  
+> High Entropy를 고려하는 이유는 Maximum Entropy Inverse Reinforcement Learning 의 논문에 자세히 나와있습니다.  
+> IRL의 이해를 위해서 반드시 보는 것을 추천 합니다.  
+> https://www.aaai.org/Papers/AAAI/2008/AAAI08-227.pdf  
+
+### Inverse Reinforcement Learning
+![image](https://user-images.githubusercontent.com/40893452/46122317-f3e86280-c252-11e8-8948-20fe3f585b04.png)
+위의 사진은 일반적인 IRL의 흐름도 입니다.     
+전문가의 demonstration을 통해서 cost function을 IRL을 통해서 찾으며  
+이 cost function을 토대로 정책 (policy)를 학습 합니다.  
+
+ψ로 정규화 (regularized)된 inverse reinforcement learning은 ψ*로 측정되는 전문가의 occupancy measure와   
+유사한 결과를 내는 정책을 찾습니다.  
+
+식으로 표현하면 다음과 같이 됩니다.  
+![image](https://user-images.githubusercontent.com/40893452/46122457-b0422880-c253-11e8-9250-7f370824d0c6.png)
+
+> occupancy measure (ρ) 는 the distribution of state-action pair 로 가진 정책을 따라서 environment를 순환할때 만나게 되는 pair 의 분포입니다.  
+그렇다면 regularizer ψ 가 무엇인지 이해하는 것이 필요합니다.  
+ψ가 "constant regularzier"라면 정확하게 occupancy measure를 근사할 수 있지만 large environment에 적합하지 못합니다.  
+반면, "indicator regularzier"라면 정확한 근사가 불가능 하지만 large environment에 적합해집니다.  
+
+### Linear regularize
+
+이 논문에서 저자는 cost function을 state 의 몇가지 feature들로 이루어진 "linear function"으로써 고려했습니다.  
 
 
 
