@@ -84,9 +84,76 @@ Inverse Reinforcement Learning이 가지는 단점은 실행시에 필요한 연
 
 ### Linear Regularize
 이 논문에서 저자는 cost function을 state 의 몇가지 feature들로 이루어진 "linear function"으로써 고려했습니다.  
+그리고, "Appreticeship Learning"으로 나아가 전문가 보다 나은 성능을 이끌어 내는 정책을 찾는 것을 목표로 합니다.  
+![image](https://user-images.githubusercontent.com/40893452/46128731-69622c00-c26f-11e8-9b47-301fdf403955.png)
+
+이때, 알고리즘은 가지고 있는 정책 (policy)를 기반으로 trajectories를 sampling하는 것과 정책을 최적화 (optimize)하는 것을 반복적으로 수행합니다.  
+그러나, 제약 조건이 하나 필요하게 됩니다.  
+linear function 으로 표현되는 볼록한 선체로 생성 된 볼록 공간 (convex space)가 필요합니다.  
+위의 제약 조건에서 Apprenticeship Learning은 잘 동작하지만 다음과 같은 문제가 존재합니다.  
+1. Craft features very carefully : "True cost function"이 우리가 가정하는 C set 내에 없을 경우 알고리즘이 전문가의 정책을 근사할 수 있을지에 대한 보장이 존재하지 않습니다.  
+
+2. Careful tuning of the sampling procedure. (GAIL removed the need of this tuning by using a GAN to tune the sampling procedure.)
+
+### Cost Function
+위의 문제들은 linear function이 cost function을 표현하기 위해서 너무 단순하다는 것에서 시작됩니다.  
+그러므로, Neural network 같은 function approximator를 활요해서 이를 근사하는 방법을 채택합니다.  
+그 결과, Casual entropy H 는 정책 (policy) regularizer로써 사용됩니다.  
+그리고 그에따라 새로운 imitation learning algorithm의 수식이 생성됩니다.  
+
+![image](https://user-images.githubusercontent.com/40893452/46129057-6e73ab00-c270-11e8-8239-a2e171e2f398.png)
 
 
+변환된 문제를 해결하기 위해서,  
+(1) occupancy measure가 전문가의 정책 (policy) 에 대한 "Jensen-Shannon divergence"를 최소화 시키는 정책 (policy)를 찾습니다.  
+(2) 위 식에서의 "saddle point"를 찾아야 합니다.  
 
+cost regularizer 는 이 논문에서 실험적으로 도출해 내었으며 다음과 같습니다.  
+
+![image](https://user-images.githubusercontent.com/40893452/46129242-fc4f9600-c270-11e8-8954-c748b65084ca.png)
+
+이 regularizer는 (전문가 - 행동) pair에 일정한 양의 "negative cost"를 할당하는 cost function C에 대해 낮은 penalty를 부과합니다.
+이때, regularizer의 특징 중 하나는 전문가의 데이터에 대한 평균이므로 임의의 전문가 dataset에 따라 조정이 일어난다는 것입니다.  
+
+그러므로, 위 의 convex conjugate는 다음과 같이 정의될 수 있습니다.  
+![image](https://user-images.githubusercontent.com/40893452/46129410-8ef03500-c271-11e8-99e7-b61631bbc94c.png)
+
+
+이것은 GAN의 discriminator의 cost function과 유사합니다.  
+에이전트와 전문가 정책의 (state-action) pair를 구별하는 binary classifier를 학습하기 위해서 사용되는 optimal negative loss 입니다.  
+
+이렇게,  
+"Regularizer"는 imitation learning과 GAN 의 연결점을 만들어 냅니다.   
+
+학습자 (learner)의 occupancy measure는 Generator G가 생성하는 데이터와 유사하게 고려되어지며,  
+전문가의 occupancy measure는 true data distribution으로 고려되어집니다.  
+그리고,  
+Discriminator function은 cost function으로써 해석될 수 있습니다.  
+
+기본적으로 (state-action) pair가 전문가 혹은 학습자의 정책에 의해 생성되었는지를 구별하기 위해 구분자 (discriminator, D)뿐만 아니라 에이전트 정책 π을 찾는 것이 목표가 됩니다.  
+
+즉, 다음과 같은 2가지를 찾는것이 목적이 됩니다.  
+(1) Discriminator  
+(2) π
+
+이때, 이 것을 최적화 하기 위해서는 "Gradient descent"를 사용하며,  
+(1) policy parameter   
+(2) discriminator paramter  
+위의 두가지에 대해서 최적화를 수행하게 됩니다.  
+
+그러나, gradient estimate는 "high variance"를 가질수 있습니다.  
+이는 학습과정에서 비효율을 나타내는 것으로 이전부터 연구되어 왔으며  
+이를 해결하기 위해서 "TRPO"의 알고리즘을 적용합니다.  
+
+### GAIL Algorithm
+(1) parameterized policy  (π)   
+(2) discriminator network  
+
+(1)과 (2)를 fit 하는 weight를 찾는것이 GAIL의 목적이 됩니다.  
+이를 위해서,  D (discriminator)에 대해서 Adam gradient step에 value를 증가시킵니다.  
+그리고,  정책 (π) 에 대해서  θ step에 value를 감소시킵니다.  
+
+![image](https://user-images.githubusercontent.com/40893452/46130280-dc6da180-c273-11e8-97e2-df6a55d419b2.png)
 
 ## [Basic Topics]
 > 위 논문을 이해하기 위해 공부하게 된 개념들에 대한 정리부분 입니다.  
