@@ -82,9 +82,9 @@ Inverse Reinforcement Learning이 가지는 단점은 실행시에 필요한 연
 ψ가 "constant regularzier"라면 정확하게 occupancy measure를 근사할 수 있지만 large environment에 적합하지 못합니다.  
 반면, "indicator regularzier"라면 정확한 근사가 불가능 하지만 large environment에 적합해집니다.  
 
-### Linear regularize
-
+### Linear Regularize
 이 논문에서 저자는 cost function을 state 의 몇가지 feature들로 이루어진 "linear function"으로써 고려했습니다.  
+
 
 
 
