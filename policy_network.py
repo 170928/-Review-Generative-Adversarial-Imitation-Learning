@@ -32,8 +32,8 @@ class PolicyNet:
                 self.value_estimates = tf.layers.dense(inputs=v2, units=1, activation = None)
                 self.value_scope = tf.get_variable_scope().name
 
-            self.policy_prams = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES, scope=self.policy_scope)
-            self.value_prams = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES, scope=self.value_scope)
+            self.policy_params = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES, scope=self.policy_scope)
+            self.value_params = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES, scope=self.value_scope)
 
             if action_type == 'stochastic:':
                 self.action_stochastic = tf.multinomial(tf.log(self.action_probs), num_samples=1)
@@ -47,3 +47,7 @@ class PolicyNet:
         return tf.get_default_session().run([self.actions, self.value_estimates], feed_dict={self.observation: obs})
 
     def get_probs(self, obs):
+        return tf.get_default_session().run(self.action_probs, feed_dict={self.observation : obs})
+
+    def get_params(self):
+        return self.policy_params, self.value_params
