@@ -30,3 +30,7 @@ if __name__ =="__main__":
 
 
         print(b, c)
+
+        test = tf.random_normal(tf.shape([0, 0, 1, 0]), mean=0.2, stddev=0.1, dtype=tf.float32) / 1.2
+
+        print(sess.run(test))
