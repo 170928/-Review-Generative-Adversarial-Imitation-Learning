@@ -31,10 +31,50 @@ class discriminaotr:
                 The neural network receive (state, action) pair.
                 Therefore, we need to concate the expert_s and expert_one_hot tensor.
                 '''
-                self.expert_input = tf.concat(self.expert_s, self.expert_one_hot)
+                self.expert_input = tf.concat([self.expert_s, self.expert_one_hot], axis=1)
 
             with tf.variable_scope('learner'):
+                self.learner_s = tf.placeholder(dtype=tf.float32, shape=[None, self.state_dim])
+                self.learner_a = tf.placeholder(dtype=tf.float32, shape=[None])
+
+                with tf.variable_scope('recover'):
+                    self.learner_one_hot = tf.one_hot(indices = self.learner_a, depth = self.action_dim, on_value = 1, off_value = 0)
+                    self.learner_one_hot += tf.random_normal(tf.shape(self.learner_one_hot), mean=0.2, stddev=0.1, dtype = tf.float32)/1.2
+
+                self.learner_input = tf.concat([self.learner_s, self.learner_one_hot], axis=1)
+
+            with tf.variable_scope('Discriminator') as network:
+                '''
+                Discriminator network
+                Input : (state , action) pair
+                Output : Probability whether the (state, action) pair is learner's or not.
+                '''
+                self.expert_action_probs = self.build_network(self.expert_input)
+                '''
+                같은 모델을 사용해야 하므로, 다음과 같이 scope 내의 변수를 선언하여 네트워크를 구성 함수를 호출한다.
+                '''
+                network.reuse_variables()
+                self.learner_action_probs = self.build_network(self.learner_input)
+
+            with tf.variable_scope('Loss'):
+                D_loss_expert = tf.reduce_mean(tf.log(tf.clip_by_value(self.expert_action_probs, 0.001, 1)))
+                D_loss_learner = tf.reduce_mean(tf.log(tf.clip_by_value(self.learner_action_probs, 0.001, 1)))
+                self.loss = -( D_loss_expert + D_loss_learner)
+                tf.summary.scalar('discriminator_Loss', self.loss)
+
+
+            with tf.variable_scope('Optimizer'):
+                optimizer = tf.train.AdamOptimizer()
                 
 
+
+
+
+    def build_network(self, input):
+        h1 = tf.layers.dense(inputs=input, units=60, activation=tf.nn.leaky_relu, name='layer1')
+        h2 = tf.layers.dense(inputs=h1, units=60, activation=tf.nn.leaky_relu, name='layer2')
+        h3 = tf.layers.dense(inputs=h2, units=60, activation=tf.nn.leaky_relu, name='layer3')
+        probs = tf.layers.dense(inputs=h3, units=1, activiation=tf.sigmoid, name='prob')
+        return probs
 
 
