@@ -72,13 +72,14 @@ class discriminaotr:
 
 
 
-
-
-
     def build_network(self, input):
         h1 = tf.layers.dense(inputs=input, units=60, activation=tf.nn.leaky_relu, name='layer1')
         h2 = tf.layers.dense(inputs=h1, units=60, activation=tf.nn.leaky_relu, name='layer2')
         h3 = tf.layers.dense(inputs=h2, units=60, activation=tf.nn.leaky_relu, name='layer3')
+        '''
+        디스크리미네이터의 결과 값은 0~1 사이의 학습자 혹은 전문가의 결과여부에 대한 확률을 의미하므로
+        다음과 같이 시그모이드를 거쳐서 나온 결과 값을 사용합니다 
+        '''
         probs = tf.layers.dense(inputs=h3, units=1, activiation=tf.sigmoid, name='prob')
         return probs
 
