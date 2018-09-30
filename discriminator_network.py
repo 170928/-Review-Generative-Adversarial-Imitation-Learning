@@ -57,15 +57,20 @@ class discriminaotr:
                 self.learner_action_probs = self.build_network(self.learner_input)
 
             with tf.variable_scope('Loss'):
-                D_loss_expert = tf.reduce_mean(tf.log(tf.clip_by_value(self.expert_action_probs, 0.001, 1)))
-                D_loss_learner = tf.reduce_mean(tf.log(tf.clip_by_value(self.learner_action_probs, 0.001, 1)))
-                self.loss = -( D_loss_expert + D_loss_learner)
+                self.D_loss_expert = tf.reduce_mean(tf.log(tf.clip_by_value(self.expert_action_probs, 0.001, 1)))
+                self.D_loss_learner = tf.reduce_mean(tf.log(tf.clip_by_value(self.learner_action_probs, 0.001, 1)))
+                self.loss = -( self.D_loss_expert + self.D_loss_learner)
                 tf.summary.scalar('discriminator_Loss', self.loss)
 
 
             with tf.variable_scope('Optimizer'):
-                optimizer = tf.train.AdamOptimizer()
-                
+                self.optimizer = tf.train.AdamOptimizer()
+                self.train = self.optimizer.minimize(self.loss)
+
+            with tf.variable_scope('D_Reward_Connection'):
+                self.D_reward = tf.log(tf.clip_by_value(self.D_loss_learner, 1e-10, 1))
+
+
 
 
 
@@ -78,3 +83,9 @@ class discriminaotr:
         return probs
 
 
+    def train(self, expert_s, expert_a, learner_s, learner_a):
+        return tf.get_default_session().run(self.train, feed_dict={self.expert_s : expert_s, self.expert_a : expert_a,
+                                                                   self.learner_s : learner_s, self.learner_a : learner_a})
+
+    def get_reward(self, learner_s, learner_a):
+        return tf.get_default_session().run(self.D_reward, feed_dict = {self.learner_s : learner_s, self.learner_a : learner_a})
