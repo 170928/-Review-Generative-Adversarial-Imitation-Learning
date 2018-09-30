@@ -1,5 +1,5 @@
 # -Review-Generative-Adversarial-Imitation-Learning  
-[Review &amp; Code]  
+[Review &amp; Code]   
 > Jonathan Ho, Stefano Ermon  
 > https://arxiv.org/pdf/1606.03476.pdf  
 
