@@ -52,13 +52,13 @@ class PPOalgorithm:
         PPO 방식의 Train을 위해서 필요한 값들을 받아오는 placeholder를 선언합니다. 
         '''
         with tf.variable_scope('PPOph'):
-            self.actions = tf.placeholder(dtype=tf.float32, shape=[None], name='actions')
+            self.actions = tf.placeholder(dtype=tf.int32, shape=[None], name='actions')
             '''
             self.rewards는 Discriminator가 (s,a) pair 에 대해서 판단한 확률값이 나오게 됩니다. 
             '''
             self.rewards = tf.placeholder(dtype=tf.float32, shape=[None], name='rewards')
-            self.GAE = tf.placeholder(dtype=tf.float32, shape=[None], name='Generalized Advantage Estimation')
-            self.nextV = tf.placeholder(dtype=tf.float32, shape=[None], name='Estimated Value')
+            self.GAE = tf.placeholder(dtype=tf.float32, shape=[None], name='GAE')
+            self.nextV = tf.placeholder(dtype=tf.float32, shape=[None], name='EstimatedValue')
 
         action_prob = self.curPolicy.action_probs
         old_action_prob = self.oldPolicy.action_probs
@@ -66,8 +66,8 @@ class PPOalgorithm:
         '''
         Important Sampling 기법의 Ratio를 구한다. 
         '''
-        self.action_probs = tf.reduce_sum(action_prob * tf.one_hot(action_prob, depth = action_prob.shape[1]), axis=1)
-        self.old_action_probs = tf.reduce_sum(old_action_prob * tf.one_hot(old_action_prob, depth = old_action_prob.shape[1]), axis=1)
+        self.action_probs = tf.reduce_sum(action_prob * tf.one_hot(self.actions, depth = action_prob.shape[1]), axis=1)
+        self.old_action_probs = tf.reduce_sum(old_action_prob * tf.one_hot(self.actions, depth = old_action_prob.shape[1]), axis=1)
 
         with tf.variable_scope('Loss'):
             '''
@@ -100,14 +100,14 @@ class PPOalgorithm:
             v_preds = self.curPolicy.value_estimates
             loss_v = tf.squared_difference(self.rewards + self.gamma * self.nextV, v_preds)
             self.loss_v = tf.reduce_mean(loss_v)
-            tf.summary.scalar('loss_value_function')
+            tf.summary.scalar('loss_value_function', self.loss_v)
 
             '''
             PPO의 loss function을 구합니다. 
             '''
             loss = self.loss_clip - self.c1 * self.loss_v + self.c2 * self.entropy
             self.loss = -loss
-            tf.summary.scalar('PPO loss')
+            tf.summary.scalar('PPO_loss', self.loss)
 
             self.merge = tf.summary.merge_all()
 

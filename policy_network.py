@@ -10,7 +10,7 @@ class PolicyNet:
 
         with tf.variable_scope(self.name):
             # 예제 코드를 따라서 observation space 는 2 인 경우로 만들고 있습니다.
-            self.observation = tf.placeholder(dtype=tf.float32, shape=[None, self.state_dim], name='observations')
+            self.observation = tf.placeholder(dtype=tf.float32, shape=[None] + list(self.state_dim.shape), name='observations')
 
             # High Dimensional Continuous Control Using Generalized Advantage Estimation Paper
             # Proximal Policy Optimization Algorithm Paper
