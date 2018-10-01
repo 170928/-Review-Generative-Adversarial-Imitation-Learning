@@ -22,7 +22,7 @@ class discriminator:
                 self.expert_a = tf.placeholder(dtype=tf.int32, shape=[None])
 
                 with tf.variable_scope('recover'):
-                    self.expert_one_hot = tf.one_hot(indices = self.expert_a, depth = self.action_dim, on_value = 1, off_value = 0)
+                    self.expert_one_hot = tf.one_hot(indices = self.expert_a, depth = self.action_dim)
                     self.expert_one_hot = tf.to_float(self.expert_one_hot)
                     '''
                     For stabilise training, we need to add noise to recovered one_hot tensor.
@@ -41,7 +41,7 @@ class discriminator:
                 self.learner_a = tf.placeholder(dtype=tf.int32, shape=[None])
 
                 with tf.variable_scope('recover'):
-                    self.learner_one_hot = tf.one_hot(indices = self.learner_a, depth = self.action_dim, on_value = 1, off_value = 0)
+                    self.learner_one_hot = tf.one_hot(indices = self.learner_a, depth = self.action_dim)
                     self.learner_one_hot = tf.to_float(self.learner_one_hot)
                     self.learner_one_hot += tf.random_normal(tf.shape(self.learner_one_hot), mean=0.2, stddev=0.1, dtype = tf.float32)/1.2
 
@@ -72,7 +72,7 @@ class discriminator:
                 self.train = self.optimizer.minimize(self.loss)
 
             with tf.variable_scope('D_Reward_Connection'):
-                self.D_reward = tf.log(tf.clip_by_value(self.D_loss_learner, 1e-10, 1))
+                self.D_reward = tf.log(tf.clip_by_value(self.learner_action_probs, 1e-10, 1))
 
     def build_network(self, input):
         h1 = tf.layers.dense(inputs=input, units=60, activation=tf.nn.leaky_relu, name='layer1')

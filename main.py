@@ -135,10 +135,12 @@ def main(args):
             for epoch in range(6):
 
                 '''
-                
+                MiniBatch 
                 '''
+
                 sample_indices = np.random.randint(low=0, high=observations.shape[0],
                                                    size=32)
+
 
                 sampled_inp = [np.take(a=a, indices=sample_indices, axis=0) for a in inp]  # sample training data
                 PPO.train(obs=sampled_inp[0],

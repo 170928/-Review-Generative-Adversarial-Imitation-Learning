@@ -84,7 +84,7 @@ class PPOalgorithm:
             self.clipped_ratio = tf.clip_by_value(self.ratios, clip_value_min=self.ratios-self.clip_value, clip_value_max=self.ratios+self.clip_value)
             loss_clip = tf.minimum(tf.multiply(self.GAE, self.ratios), tf.multiply(self.GAE, self.clipped_ratio))
             self.loss_clip = tf.reduce_mean(loss_clip)
-            tf.summary.scalar('loss_clip', loss_clip)
+            tf.summary.scalar('loss_clip', self.loss_clip)
 
             '''
             policy entropy를 계산
