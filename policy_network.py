@@ -35,7 +35,7 @@ class PolicyNet:
             self.policy_params = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES, scope=self.policy_scope)
             self.value_params = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES, scope=self.value_scope)
 
-            if action_type == 'stochastic:':
+            if action_type == 'stochastic':
                 self.action_stochastic = tf.multinomial(tf.log(self.action_probs), num_samples=1)
                 self.actions = tf.reshape(self.action_stochastic, [-1])
 

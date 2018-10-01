@@ -14,8 +14,8 @@ Therefore, you need to understand mathmatically about it.
 > High-Dimensional Continuous Control Using Generalized Advatage Estimation 논문에서 볼 수 있습니다.
 '''
 
-class PPO():
-    def __int__(self, OldPolicy, CurPolicy, gamma=0.99, clip_value=0.2, c1 = 1, c2 = 0.01 ):
+class PPOalgorithm:
+    def __init__(self, OldPolicy, CurPolicy, gamma=0.99, clip_value=0.2, c1 = 1, c2 = 0.01 ):
         '''
         :param OldPolicy: Old Policy Network made by policy_network.py 가 들어옵니다.
         :param CurPolicy:  Current Policy Network made by policy_network.py
@@ -83,10 +83,87 @@ class PPO():
             '''
             self.clipped_ratio = tf.clip_by_value(self.ratios, clip_value_min=self.ratios-self.clip_value, clip_value_max=self.ratios+self.clip_value)
             loss_clip = tf.minimum(tf.multiply(self.GAE, self.ratios), tf.multiply(self.GAE, self.clipped_ratio))
-            loss_clip = tf.reduce_mean(loss_clip)
+            self.loss_clip = tf.reduce_mean(loss_clip)
             tf.summary.scalar('loss_clip', loss_clip)
 
-            
+            '''
+            policy entropy를 계산
+            '''
+            self.entropy = -tf.reduce_sum(self.curPolicy.action_probs * tf.log(tf.clip_by_value(self.curPolicy.action_probs, 1e-10, 1.0)), axis = 1)
+            self.entropy = tf.reduce_mean(self.entropy, axis=0)
+            tf.summary.scalar('entropy', self.entropy)
+
+            '''
+            Value function estimator를 update 하기 위한 loss function
+            '''
+
+            v_preds = self.curPolicy.value_estimates
+            loss_v = tf.squared_difference(self.rewards + self.gamma * self.nextV, v_preds)
+            self.loss_v = tf.reduce_mean(loss_v)
+            tf.summary.scalar('loss_value_function')
+
+            '''
+            PPO의 loss function을 구합니다. 
+            '''
+            loss = self.loss_clip - self.c1 * self.loss_v + self.c2 * self.entropy
+            self.loss = -loss
+            tf.summary.scalar('PPO loss')
+
+            self.merge = tf.summary.merge_all()
+
+        with tf.variable_scope('Optimizer'):
+            optimizer = tf.train.AdamOptimizer(learning_rate=1e-4, epsilon=1e-5)
+            self.gradients = optimizer.compute_gradients(self.loss, self.cur_params)
+            self.train_op = optimizer.minimize(self.loss, var_list=self.cur_params)
+
+
+    def train(self, obs, actions, GAEs, rewards, estimated_v):
+        tf.get_default_session().run(self.train_op, feed_dict = {
+                                                                self.curPolicy.observation: obs,
+                                                                self.oldPolicy.observation: obs,
+                                                                self.actions: actions,
+                                                                self.rewards: rewards,
+                                                                self.nextV: estimated_v,
+                                                                self.GAE: GAEs
+                                                                })
+
+    def get_summary(self, obs, actions, GAEs, rewards, estimated_v):
+        return tf.get_default_session().run(self.merge, feed_dict = {
+                                                                self.curPolicy.observation: obs,
+                                                                self.oldPolicy.observation: obs,
+                                                                self.actions: actions,
+                                                                self.rewards: rewards,
+                                                                self.nextV: estimated_v,
+                                                                self.GAE: GAEs
+                                                                })
+
+
+    def update(self):
+        return tf.get_default_session().run(self.assign_op)
+
+
+    def get_gaes(self, rewards, v_preds, v_next_preds):
+        '''
+        PPO의 GAE 를 구하기 위한 delta 를 계산한 후 lamda와 gamma를 이용하여 GAE를 구한다.
+        '''
+
+        self.deltas = [r_t + self.gamma * v_next - v for r_t, v_next, v in zip(rewards, v_next_preds, v_preds)]
+        gaes = copy.deepcopy(self.deltas)
+        for t in reversed(range(len(gaes)-1)):
+            gaes[t] = gaes[t] + self.gamma * gaes[t+1]
+
+        return gaes
+
+    def get_grad(self,  obs, actions, GAEs, rewards, estimated_v):
+        return tf.get_default_session().run(self.gradients, feed_dict = {
+                                                                self.curPolicy.observation: obs,
+                                                                self.oldPolicy.observation: obs,
+                                                                self.actions: actions,
+                                                                self.rewards: rewards,
+                                                                self.nextV: estimated_v,
+                                                                self.GAE: GAEs
+                                                                })
+
 
 
 

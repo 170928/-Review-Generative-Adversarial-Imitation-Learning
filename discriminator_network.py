@@ -1,6 +1,6 @@
 import tensorflow as tf
 
-class discriminaotr:
+class discriminator:
     def __init__(self, state_dim, action_dim, name, action_type):
         self.state_dim = state_dim
         self.action_dim = action_dim
