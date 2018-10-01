@@ -50,4 +50,4 @@ class PolicyNet:
         return tf.get_default_session().run(self.action_probs, feed_dict={self.observation : obs})
 
     def get_params(self):
-        return self.policy_params, self.value_params
+        return tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES)
