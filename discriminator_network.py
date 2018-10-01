@@ -61,8 +61,8 @@ class discriminator:
                 self.learner_action_probs = self.build_network(self.learner_input)
 
             with tf.variable_scope('Loss'):
-                self.D_loss_expert = tf.reduce_mean(tf.log(tf.clip_by_value(self.expert_action_probs, 0.001, 1)))
-                self.D_loss_learner = tf.reduce_mean(tf.log(tf.clip_by_value(self.learner_action_probs, 0.001, 1)))
+                self.D_loss_expert = tf.reduce_mean(tf.log(tf.clip_by_value(self.expert_action_probs, 0.01, 1)))
+                self.D_loss_learner = tf.reduce_mean(tf.log(tf.clip_by_value(self.learner_action_probs, 0.01, 1)))
                 self.loss = -( self.D_loss_expert + self.D_loss_learner)
                 tf.summary.scalar('discriminator_Loss', self.loss)
 

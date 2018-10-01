@@ -15,7 +15,7 @@ Therefore, you need to understand mathmatically about it.
 '''
 
 class PPOalgorithm:
-    def __init__(self, OldPolicy, CurPolicy, gamma=0.99, clip_value=0.2, c1 = 1, c2 = 0.01 ):
+    def __init__(self, OldPolicy, CurPolicy, gamma=0.95, clip_value=0.2, c1 = 1, c2 = 0.01 ):
         '''
         :param OldPolicy: Old Policy Network made by policy_network.py 가 들어옵니다.
         :param CurPolicy:  Current Policy Network made by policy_network.py
@@ -81,7 +81,7 @@ class PPOalgorithm:
             PPO 논문에서 제안하는 loss function에서의 Important Sampling Loss를 Clip 하는 operation
             PPO 논문 equation (7)을 확신하시면 됩니다. 
             '''
-            self.clipped_ratio = tf.clip_by_value(self.ratios, clip_value_min=self.ratios-self.clip_value, clip_value_max=self.ratios+self.clip_value)
+            self.clipped_ratio = tf.clip_by_value(self.ratios, clip_value_min=1 - self.clip_value, clip_value_max = 1 + self.clip_value)
             loss_clip = tf.minimum(tf.multiply(self.GAE, self.ratios), tf.multiply(self.GAE, self.clipped_ratio))
             self.loss_clip = tf.reduce_mean(loss_clip)
             tf.summary.scalar('loss_clip', self.loss_clip)

@@ -18,7 +18,7 @@ def argparser():
     parser = argparse.ArgumentParser()
     parser.add_argument('--logdir', help='log directory', default='./log/train/')
     parser.add_argument('--savedir', help='save directory', default='./save_model/')
-    parser.add_argument('--gamma', default=0.99)
+    parser.add_argument('--gamma', default=0.95)
     parser.add_argument('--iteration', default=int(1e4))
     return parser.parse_args()
 
@@ -32,11 +32,11 @@ def main(args):
     '''
     PolicyNet(state_dim, action_dim, name, action_type)
     '''
-    curPolicy = PolicyNet(state_dim, action_dim, 'currentPolicy', 'deterministic')
-    oldPolicy = PolicyNet(state_dim, action_dim, 'oldPolicy', 'deterministic')
+    curPolicy = PolicyNet(state_dim, action_dim, 'currentPolicy', 'stochastic')
+    oldPolicy = PolicyNet(state_dim, action_dim, 'oldPolicy', 'stochastic')
 
     PPO = PPOalgorithm( oldPolicy, curPolicy,  gamma=args.gamma)
-    Discriminator = discriminator(state_dim, action_dim, 'Discriminator', 'deterministic')
+    Discriminator = discriminator(state_dim, action_dim, 'Discriminator', 'stochastic')
 
 
     expert_observations = np.genfromtxt('trajectory/observations.csv')
@@ -61,6 +61,7 @@ def main(args):
             run_policy_steps = 0
 
             while True:
+                env.render()
                 run_policy_steps += 1
                 obs = np.stack([obs]).astype(dtype=np.float32)  # prepare to feed placeholder Policy.obs
 
@@ -92,9 +93,9 @@ def main(args):
             writer.add_summary(tf.Summary(value=[tf.Summary.Value(tag='episode_reward', simple_value=sum(rewards))])
                                , iteration)
 
-            if sum(rewards) >= 195:
+            if sum(rewards) >= 190:
                 success_num += 1
-                if success_num >= 100:
+                if success_num >= 5:
                     saver.save(sess, args.savedir + '/model.ckpt')
                     print('Clear!! Model saved.')
                     break

@@ -4,7 +4,9 @@
     <list default="true" id="ee7509e8-a310-4f15-b57a-e2f45596c416" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/PPO.py" beforeDir="false" afterPath="$PROJECT_DIR$/PPO.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/discriminator_network.py" beforeDir="false" afterPath="$PROJECT_DIR$/discriminator_network.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/log/train/events.out.tfevents.1538402599.shin" beforeDir="false" afterPath="$PROJECT_DIR$/log/train/events.out.tfevents.1538402599.shin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/policy_network.py" beforeDir="false" afterPath="$PROJECT_DIR$/policy_network.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -35,27 +37,27 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="py" value="16331" />
+          <entry key="py" value="16511" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="Python" value="16331" />
+          <entry key="Python" value="16511" />
         </counts>
       </usages-collector>
     </session>
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="303">
-              <caret line="121" lean-forward="true" selection-start-line="121" selection-end-line="121" />
+            <state relative-caret-position="333">
+              <caret line="44" column="28" selection-start-line="44" selection-start-column="28" selection-end-line="44" selection-end-column="28" />
               <folding>
                 <element signature="e#197#212#0" expanded="true" />
-                <marker date="1538402595409" expanded="true" signature="759:5637" ph="..." />
-                <marker date="1538402595409" expanded="true" signature="759:5708" ph="..." />
+                <marker date="1538404021388" expanded="true" signature="759:5655" ph="..." />
+                <marker date="1538404021388" expanded="true" signature="759:5726" ph="..." />
               </folding>
             </state>
           </provider>
@@ -74,10 +76,10 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/policy_network.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-117">
-              <caret line="12" column="105" selection-start-line="12" selection-start-column="105" selection-end-line="12" selection-end-column="105" />
+            <state relative-caret-position="168">
+              <caret line="37" column="64" selection-start-line="37" selection-start-column="64" selection-end-line="37" selection-end-column="64" />
               <folding>
-                <marker date="1538389736637" expanded="true" signature="41:46" ph="..." />
+                <marker date="1538404537277" expanded="true" signature="41:46" ph="..." />
               </folding>
             </state>
           </provider>
@@ -98,26 +100,26 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/discriminator_network.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="150">
-              <caret line="25" column="74" selection-start-line="25" selection-start-column="74" selection-end-line="25" selection-end-column="74" />
+            <state relative-caret-position="393">
+              <caret line="62" column="43" selection-start-line="62" selection-start-column="43" selection-end-line="62" selection-end-column="43" />
               <folding>
-                <marker date="1538402518637" expanded="true" signature="46:51" ph="..." />
-                <marker date="1538402518637" expanded="true" signature="3835:3844" ph="..." />
-                <marker date="1538402518637" expanded="true" signature="4423:4424" ph="..." />
+                <marker date="1538403559810" expanded="true" signature="46:51" ph="..." />
+                <marker date="1538403559810" expanded="true" signature="3833:3842" ph="..." />
+                <marker date="1538403559810" expanded="true" signature="4421:4422" ph="..." />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/PPO.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="76">
-              <caret line="78" selection-start-line="78" selection-end-line="78" />
+            <state relative-caret-position="-240">
+              <caret line="119" column="62" lean-forward="true" selection-start-line="119" selection-start-column="62" selection-end-line="119" selection-end-column="62" />
               <folding>
                 <element signature="e#0#23#0" expanded="true" />
-                <marker date="1538402561577" expanded="true" signature="694:699" ph="..." />
-                <marker date="1538402561577" expanded="true" signature="694:7940" ph="..." />
+                <marker date="1538406102387" expanded="true" signature="694:699" ph="..." />
+                <marker date="1538406102387" expanded="true" signature="694:7926" ph="..." />
               </folding>
             </state>
           </provider>
@@ -148,10 +150,10 @@
       <list>
         <option value="$PROJECT_DIR$/discriminator.py" />
         <option value="$PROJECT_DIR$/tf_test.py" />
-        <option value="$PROJECT_DIR$/policy_network.py" />
         <option value="$PROJECT_DIR$/discriminator_network.py" />
-        <option value="$PROJECT_DIR$/PPO.py" />
         <option value="$PROJECT_DIR$/main.py" />
+        <option value="$PROJECT_DIR$/policy_network.py" />
+        <option value="$PROJECT_DIR$/PPO.py" />
       </list>
     </option>
   </component>
@@ -181,7 +183,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../gail_ppo_tf-master" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -277,7 +279,7 @@
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Version Control" order="7" />
-      <window_info anchor="bottom" id="Terminal" order="8" />
+      <window_info anchor="bottom" id="Terminal" order="8" weight="0.32984293" />
       <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
       <window_info anchor="bottom" id="Python Console" order="10" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -317,48 +319,48 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/policy_network.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-117">
-          <caret line="12" column="105" selection-start-line="12" selection-start-column="105" selection-end-line="12" selection-end-column="105" />
-          <folding>
-            <marker date="1538389736637" expanded="true" signature="41:46" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/discriminator_network.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="25" column="74" selection-start-line="25" selection-start-column="74" selection-end-line="25" selection-end-column="74" />
+        <state relative-caret-position="393">
+          <caret line="62" column="43" selection-start-line="62" selection-start-column="43" selection-end-line="62" selection-end-column="43" />
           <folding>
-            <marker date="1538402518637" expanded="true" signature="46:51" ph="..." />
-            <marker date="1538402518637" expanded="true" signature="3835:3844" ph="..." />
-            <marker date="1538402518637" expanded="true" signature="4423:4424" ph="..." />
+            <marker date="1538403559810" expanded="true" signature="46:51" ph="..." />
+            <marker date="1538403559810" expanded="true" signature="3833:3842" ph="..." />
+            <marker date="1538403559810" expanded="true" signature="4421:4422" ph="..." />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/PPO.py">
+    <entry file="file://$PROJECT_DIR$/policy_network.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="76">
-          <caret line="78" selection-start-line="78" selection-end-line="78" />
+        <state relative-caret-position="168">
+          <caret line="37" column="64" selection-start-line="37" selection-start-column="64" selection-end-line="37" selection-end-column="64" />
           <folding>
-            <element signature="e#0#23#0" expanded="true" />
-            <marker date="1538402561577" expanded="true" signature="694:699" ph="..." />
-            <marker date="1538402561577" expanded="true" signature="694:7940" ph="..." />
+            <marker date="1538404537277" expanded="true" signature="41:46" ph="..." />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="303">
-          <caret line="121" lean-forward="true" selection-start-line="121" selection-end-line="121" />
+        <state relative-caret-position="333">
+          <caret line="44" column="28" selection-start-line="44" selection-start-column="28" selection-end-line="44" selection-end-column="28" />
           <folding>
             <element signature="e#197#212#0" expanded="true" />
-            <marker date="1538402595409" expanded="true" signature="759:5637" ph="..." />
-            <marker date="1538402595409" expanded="true" signature="759:5708" ph="..." />
+            <marker date="1538404021388" expanded="true" signature="759:5655" ph="..." />
+            <marker date="1538404021388" expanded="true" signature="759:5726" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/PPO.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-240">
+          <caret line="119" column="62" lean-forward="true" selection-start-line="119" selection-start-column="62" selection-end-line="119" selection-end-column="62" />
+          <folding>
+            <element signature="e#0#23#0" expanded="true" />
+            <marker date="1538406102387" expanded="true" signature="694:699" ph="..." />
+            <marker date="1538406102387" expanded="true" signature="694:7926" ph="..." />
           </folding>
         </state>
       </provider>
