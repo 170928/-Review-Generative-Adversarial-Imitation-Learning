@@ -197,7 +197,6 @@ p(페라리) = 0.01, p(아반떼) = 0.8, p(etc1) = ... , p(etc2) = ..., .....
 
 
 
-
-
-
+## [Implementation Issue]
+올라와 있는 trajectries 들을 기반으로 학습 시켯을 때, 평균적으로 800~900회 부근에서 Cartpole Success가 이루어지기 시작합니다.   
 
