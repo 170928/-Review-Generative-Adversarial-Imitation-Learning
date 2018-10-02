@@ -107,7 +107,7 @@ def main(args):
 
             if sum(rewards) >= 190:
                 success_num += 1
-                if success_num >= 1:
+                if success_num >= 5:
                     saver.save(sess, args.savedir + '/model.ckpt')
                     print('Clear!! Model saved.')
                     break

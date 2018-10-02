@@ -107,7 +107,7 @@ class PPOalgorithm:
             '''
             loss = self.loss_clip - self.c1 * self.loss_v + self.c2 * self.entropy
             self.loss = -loss
-            tf.summary.scalar('PPO_loss', self.loss)
+            tf.summary.scalar('total_loss', self.loss)
 
             self.merge = tf.summary.merge_all()
 

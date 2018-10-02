@@ -21,9 +21,13 @@ class discriminator:
                 self.expert_s = tf.placeholder(dtype=tf.float32, shape=[None] + list(self.state_dim.shape))
                 self.expert_a = tf.placeholder(dtype=tf.int32, shape=[None])
 
+                #print(self.expert_s)
+                #print(self.expert_a)
+
                 with tf.variable_scope('recover'):
                     self.expert_one_hot = tf.one_hot(indices = self.expert_a, depth = self.action_dim)
                     #self.expert_one_hot = tf.to_float(self.expert_one_hot)
+                    #print(self.expert_one_hot)
                     '''
                     For stabilise training, we need to add noise to recovered one_hot tensor.
                     i.e, [0 0 1 0] => [0.2331, 0.1313, 1, 0.4131]
@@ -62,7 +66,7 @@ class discriminator:
 
             with tf.variable_scope('Loss'):
                 self.D_loss_expert = tf.reduce_mean(tf.log(tf.clip_by_value(self.expert_action_probs, 0.01, 1)))
-                self.D_loss_learner = tf.reduce_mean(tf.log(tf.clip_by_value(self.learner_action_probs, 0.01, 1)))
+                self.D_loss_learner = tf.reduce_mean(tf.log(tf.clip_by_value(1-self.learner_action_probs, 0.01, 1)))
                 self.loss = -( self.D_loss_expert + self.D_loss_learner)
                 tf.summary.scalar('discriminator_Loss', self.loss)
 
@@ -75,9 +79,9 @@ class discriminator:
                 self.D_reward = tf.log(tf.clip_by_value(self.learner_action_probs, 1e-10, 1))
 
     def build_network(self, input):
-        h1 = tf.layers.dense(inputs=input, units=60, activation=tf.nn.leaky_relu, name='layer1')
-        h2 = tf.layers.dense(inputs=h1, units=60, activation=tf.nn.leaky_relu, name='layer2')
-        h3 = tf.layers.dense(inputs=h2, units=60, activation=tf.nn.leaky_relu, name='layer3')
+        h1 = tf.layers.dense(inputs=input, units=20, activation=tf.nn.tanh, name='layer1')
+        h2 = tf.layers.dense(inputs=h1, units=20, activation=tf.nn.tanh, name='layer2')
+        h3 = tf.layers.dense(inputs=h2, units=20, activation=tf.nn.tanh, name='layer3')
         '''
         디스크리미네이터의 결과 값은 0~1 사이의 학습자 혹은 전문가의 결과여부에 대한 확률을 의미하므로
         다음과 같이 시그모이드를 거쳐서 나온 결과 값을 사용합니다 

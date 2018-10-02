@@ -11,6 +11,7 @@ class PolicyNet:
         with tf.variable_scope(self.name):
             # 예제 코드를 따라서 observation space 는 2 인 경우로 만들고 있습니다.
             self.observation = tf.placeholder(dtype=tf.float32, shape=[None] + list(self.state_dim.shape), name='observations')
+            #print(self.observation)
 
             # High Dimensional Continuous Control Using Generalized Advantage Estimation Paper
             # Proximal Policy Optimization Algorithm Paper
@@ -30,23 +31,29 @@ class PolicyNet:
                 h2 = tf.layers.dense(inputs=h1, units=20, activation=tf.tanh)
                 h3 = tf.layers.dense(inputs=h2, units=self.action_dim, activation=tf.tanh)
                 self.action_probs = tf.layers.dense(inputs=h3, units=self.action_dim, activation=tf.nn.softmax)
-                self.policy_scope = tf.get_variable_scope().name
+                #self.policy_scope = tf.get_variable_scope().name
+                #print(self.action_probs)
 
             with tf.variable_scope('value'):
                 v1 = tf.layers.dense(inputs=self.observation, units=20, activation=tf.tanh)
                 v2 = tf.layers.dense(inputs=v1, units=20, activation=tf.tanh)
                 self.value_estimates = tf.layers.dense(inputs=v2, units=1, activation = None)
-                self.value_scope = tf.get_variable_scope().name
+                #self.value_scope = tf.get_variable_scope().name
 
-            self.policy_params = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES, scope=self.policy_scope)
-            self.value_params = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES, scope=self.value_scope)
+            #self.policy_params = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES, scope=self.policy_scope)
+            #self.value_params = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES, scope=self.value_scope)
 
             if action_type == 'stochastic':
                 self.action_stochastic = tf.multinomial(tf.log(self.action_probs), num_samples=1)
                 self.actions = tf.reshape(self.action_stochastic, [-1])
 
+                #print(self.action_stochastic)
+                #print(self.actions)
+
             else:
                 self.actions = tf.argmax(self.action_probs, axis = 1)
+
+            self.scope = tf.get_variable_scope().name
 
 
     def estimate(self, obs):
@@ -56,4 +63,4 @@ class PolicyNet:
         return tf.get_default_session().run(self.action_probs, feed_dict={self.observation : obs})
 
     def get_params(self):
-        return tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES)
+        return tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES, scope = self.scope)
