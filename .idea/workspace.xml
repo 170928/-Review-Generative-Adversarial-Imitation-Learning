@@ -2,15 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ee7509e8-a310-4f15-b57a-e2f45596c416" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PPO.py" beforeDir="false" afterPath="$PROJECT_DIR$/PPO.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/discriminator_network.py" beforeDir="false" afterPath="$PROJECT_DIR$/discriminator_network.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/log/train/events.out.tfevents.1538462447.shin" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/log/train/events.out.tfevents.1538462548.shin" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/policy_network.py" beforeDir="false" afterPath="$PROJECT_DIR$/policy_network.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/trajectory/actions.csv" beforeDir="false" afterPath="$PROJECT_DIR$/trajectory/actions.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/trajectory/observations.csv" beforeDir="false" afterPath="$PROJECT_DIR$/trajectory/observations.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/log/train/events.out.tfevents.1538469171.shin" beforeDir="false" afterPath="$PROJECT_DIR$/log/train/events.out.tfevents.1538469171.shin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/save_model/model.ckpt.data-00000-of-00001" beforeDir="false" afterPath="$PROJECT_DIR$/save_model/model.ckpt.data-00000-of-00001" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/save_model/model.ckpt.index" beforeDir="false" afterPath="$PROJECT_DIR$/save_model/model.ckpt.index" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/save_model/model.ckpt.meta" beforeDir="false" afterPath="$PROJECT_DIR$/save_model/model.ckpt.meta" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -81,7 +76,7 @@
         <entry file="file://$PROJECT_DIR$/policy_network.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="648">
-              <caret line="52" column="17" lean-forward="true" selection-start-line="52" selection-start-column="17" selection-end-line="52" selection-end-column="17" />
+              <caret line="52" column="17" selection-start-line="52" selection-start-column="17" selection-end-line="52" selection-end-column="17" />
               <folding>
                 <marker date="1538467333243" expanded="true" signature="41:46" ph="..." />
               </folding>
@@ -184,6 +179,12 @@
               <item name="-Review-Generative-Adversarial-Imitation-Learning" type="462c0819:PsiDirectoryNode" />
               <item name="log" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="-Review-Generative-Adversarial-Imitation-Learning" type="b2602c69:ProjectViewProjectNode" />
+              <item name="-Review-Generative-Adversarial-Imitation-Learning" type="462c0819:PsiDirectoryNode" />
+              <item name="log" type="462c0819:PsiDirectoryNode" />
+              <item name="train" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
@@ -274,19 +275,20 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="64" y="-11" width="1857" height="1092" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.18787548" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.32984293" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.32984293" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Version Control" order="7" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="8" visible="true" weight="0.32984293" />
+      <window_info anchor="bottom" id="Terminal" order="8" weight="0.32984293" />
       <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
       <window_info anchor="bottom" id="Python Console" order="10" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -350,7 +352,7 @@
     <entry file="file://$PROJECT_DIR$/policy_network.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="648">
-          <caret line="52" column="17" lean-forward="true" selection-start-line="52" selection-start-column="17" selection-end-line="52" selection-end-column="17" />
+          <caret line="52" column="17" selection-start-line="52" selection-start-column="17" selection-end-line="52" selection-end-column="17" />
           <folding>
             <marker date="1538467333243" expanded="true" signature="41:46" ph="..." />
           </folding>
