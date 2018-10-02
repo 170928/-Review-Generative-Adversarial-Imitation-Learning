@@ -23,7 +23,7 @@ class discriminator:
 
                 with tf.variable_scope('recover'):
                     self.expert_one_hot = tf.one_hot(indices = self.expert_a, depth = self.action_dim)
-                    self.expert_one_hot = tf.to_float(self.expert_one_hot)
+                    #self.expert_one_hot = tf.to_float(self.expert_one_hot)
                     '''
                     For stabilise training, we need to add noise to recovered one_hot tensor.
                     i.e, [0 0 1 0] => [0.2331, 0.1313, 1, 0.4131]
@@ -42,7 +42,7 @@ class discriminator:
 
                 with tf.variable_scope('recover'):
                     self.learner_one_hot = tf.one_hot(indices = self.learner_a, depth = self.action_dim)
-                    self.learner_one_hot = tf.to_float(self.learner_one_hot)
+                    #self.learner_one_hot = tf.to_float(self.learner_one_hot)
                     self.learner_one_hot += tf.random_normal(tf.shape(self.learner_one_hot), mean=0.2, stddev=0.1, dtype = tf.float32)/1.2
 
                 self.learner_input = tf.concat([self.learner_s, self.learner_one_hot], axis=1)

@@ -5,7 +5,7 @@
 # Thank you.
 
 
-
+import os
 import argparse
 import gym
 import numpy as np
@@ -19,7 +19,7 @@ def argparser():
     parser.add_argument('--logdir', help='log directory', default='./log/train/')
     parser.add_argument('--savedir', help='save directory', default='./save_model/')
     parser.add_argument('--gamma', default=0.95)
-    parser.add_argument('--iteration', default=int(1e4))
+    parser.add_argument('--iteration', default=int(1000000))
     return parser.parse_args()
 
 
@@ -43,10 +43,20 @@ def main(args):
     expert_actions = np.genfromtxt('trajectory/actions.csv', dtype=np.int32)
 
     saver = tf.train.Saver()
+    checkpoint_path = os.path.join(args.savedir, "model")
+    ckpt = tf.train.get_checkpoint_state(args.savedir)
 
     with tf.Session() as sess:
         writer = tf.summary.FileWriter(args.logdir, sess.graph)
-        sess.run(tf.global_variables_initializer())
+
+        if ckpt and ckpt.model_checkpoint_path:
+            print("[Restore Model]")
+            saver.restore(sess, ckpt.model_checkpoint_path)
+        else:
+            print("[Initialzie Model]")
+            sess.run(tf.global_variables_initializer())
+
+
 
         obs = env.reset()
         reward = 0
@@ -93,9 +103,11 @@ def main(args):
             writer.add_summary(tf.Summary(value=[tf.Summary.Value(tag='episode_reward', simple_value=sum(rewards))])
                                , iteration)
 
+            print(iteration, sum(rewards), success_num)
+
             if sum(rewards) >= 190:
                 success_num += 1
-                if success_num >= 5:
+                if success_num >= 1:
                     saver.save(sess, args.savedir + '/model.ckpt')
                     print('Clear!! Model saved.')
                     break
@@ -112,7 +124,10 @@ def main(args):
             Discriminator를 업데이트 합니다. 
             '''
             for i in range(2):
-                Discriminator.update(expert_observations, expert_actions, observations, actions)
+                sample_indices = (np.random.randint(expert_observations.shape[0], size=observations.shape[0]))
+                inp = [expert_observations, expert_actions]
+                sampled_inp = [np.take(a=a, indices=sample_indices, axis=0) for a in inp]  # sample training data
+                Discriminator.update(sampled_inp[0], sampled_inp[1], observations, actions)
             '''
             GAIL 의 논문을 참조하세요.
             GAIL 논문의 reward 는 Discriminator의 (s,a) pair 에 대한 learner의 policy에서 생성된 것인지를 판단하는 
@@ -133,15 +148,12 @@ def main(args):
             PPO.update()
 
 
-            for epoch in range(6):
-
+            for epoch in range(15):
                 '''
                 MiniBatch 
                 '''
-
                 sample_indices = np.random.randint(low=0, high=observations.shape[0],
                                                    size=32)
-
 
                 sampled_inp = [np.take(a=a, indices=sample_indices, axis=0) for a in inp]  # sample training data
                 PPO.train(obs=sampled_inp[0],
